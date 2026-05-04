@@ -1,6 +1,6 @@
 spring:
   application:
-    name: gzac-plugin-template
+    name: document-verzoek-plugin
   profiles:
     active: dev
   jackson:

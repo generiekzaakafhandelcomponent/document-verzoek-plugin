@@ -14,6 +14,12 @@
  * limitations under the License.
  */
 
-package com.ritense.valtimoplugins.sampleplugin
+package com.ritense.valtimoplugins.documentverzoek
 
-abstract class BaseTest
+import org.junit.jupiter.api.Test
+
+internal class ApplicationStartIT : BaseIntegrationTest() {
+    @Test
+    fun `should start application`() {
+    }
+}

@@ -15,7 +15,7 @@
  */
 
 dockerCompose {
-    setProjectName("sample-plugin")
+    setProjectName("document-verzoek-plugin")
     isRequiredBy(project.tasks.integrationTesting)
 
     tasks.integrationTesting {
@@ -29,9 +29,11 @@ val valtimoVersion: String by project
 val operatonVersion: String by project
 
 dependencies {
+    compileOnly("com.ritense.valtimo:core")
     compileOnly("com.ritense.valtimo:plugin-valtimo")
     compileOnly("com.ritense.valtimo:process-document")
     compileOnly("com.ritense.valtimo:contract")
+    implementation("com.ritense.valtimo:valtimo-gzac-dependencies")
     compileOnly("org.operaton.bpm:operaton-engine:$operatonVersion")
     compileOnly("org.springframework.boot:spring-boot-autoconfigure")
     compileOnly("org.springframework.boot:spring-boot-starter-web")
