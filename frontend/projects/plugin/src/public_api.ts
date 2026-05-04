@@ -15,11 +15,10 @@
  */
 
 /*
- * Public API Surface of sample-plugin
+ * Public API Surface of document-verzoek
  */
 
-export * from "./lib/plugins/sample-plugin/models";
-export * from "./lib/plugins/sample-plugin/sample-plugin-module";
-export * from "./lib/plugins/sample-plugin/sample-plugin.specification";
-export * from "./lib/plugins/sample-plugin/components/sample-plugin-configuration/sample-plugin-configuration.component";
-export * from "./lib/plugins/sample-plugin/components/sample-action-configuration/sample-action-configuration.component";
+export * from "./lib/plugins/document-verzoek/models";
+export * from "./lib/plugins/document-verzoek/document-verzoek-module";
+export * from "./lib/plugins/document-verzoek/document-verzoek.specification";
+export * from "./lib/plugins/document-verzoek/components/document-verzoek-configuration/document-verzoek-configuration.component";

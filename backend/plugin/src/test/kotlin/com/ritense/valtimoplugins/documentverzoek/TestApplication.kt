@@ -14,4 +14,14 @@
  * limitations under the License.
  */
 
-export * from "./config";
+package com.ritense.valtimoplugins.documentverzoek
+
+import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.runApplication
+
+@SpringBootApplication
+class TestApplication
+
+fun main(args: Array<String>) {
+    runApplication<TestApplication>(*args)
+}

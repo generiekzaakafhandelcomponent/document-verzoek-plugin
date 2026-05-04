@@ -16,7 +16,7 @@
 
 package com.ritense.valtimoplugins.documentverzoek.plugin
 
-import com.ritense.authorization.AuthorizationContext
+import com.ritense.authorization.AuthorizationContext.Companion.runWithoutAuthorization
 import com.ritense.case.service.CaseDefinitionService
 import com.ritense.documentenapi.DocumentenApiPlugin
 import com.ritense.notificatiesapi.NotificatiesApiListener
@@ -27,7 +27,6 @@ import com.ritense.plugin.annotation.PluginEvent
 import com.ritense.plugin.annotation.PluginProperty
 import com.ritense.plugin.domain.EventType
 import com.ritense.valtimo.service.ApplicationStateService
-import com.ritense.valtimoplugins.documentverzoek.domain.InformatieobjecttypeUrl
 import com.ritense.zakenapi.ZakenApiPlugin
 import com.ritense.zakenapi.repository.ZaakTypeLinkRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
@@ -59,6 +58,7 @@ class DocumentVerzoekPlugin(
     lateinit var eventMessage: String
 
     @PluginEvent(invokedOn = [EventType.CREATE, EventType.UPDATE])
+
     fun validateProperties() {
         if (!applicationStateService.isApplicationReady()) {
             return // Skip validation: Case Definition might not exist yet because the auto deployment of Case Definitions happens later.
@@ -70,7 +70,7 @@ class DocumentVerzoekPlugin(
     }
 
     override fun getKanaalFilters(): List<Abonnement.Kanaal> {
-        return AuthorizationContext.Companion.runWithoutAuthorization {
+        return runWithoutAuthorization {
             (caseDefinitionService.getCaseDefinitions(active = true, final = false) +
                 caseDefinitionService.getCaseDefinitions(
                     active = true,
