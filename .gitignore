@@ -60,6 +60,7 @@ out/**
 *.ipr
 *.ids
 *.orig
+http-client.private.env.json
 
 ######################
 # Maven
