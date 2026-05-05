@@ -32,3 +32,15 @@ spring-actuator:
 valtimo:
   plugin:
     encryption-secret: "abcdefghijklmnop"
+operaton:
+  bpm:
+    history-level: AUDIT
+    history-level-default: AUDIT
+    admin-user:
+      id: Admin
+      password: admin
+      first-name: Admin account
+    generic-properties:
+      properties:
+        deploy-changed-only: true
+        enforceHistoryTimeToLive: false
