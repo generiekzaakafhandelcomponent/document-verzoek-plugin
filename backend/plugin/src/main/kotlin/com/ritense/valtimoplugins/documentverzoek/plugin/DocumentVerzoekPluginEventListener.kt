@@ -82,7 +82,8 @@ class DocumentVerzoekPluginEventListener(
         pluginService.createInstance(
             DocumentVerzoekPlugin::class.java
         ) { properties ->
-            !properties["informatieobjecttypeUrls"].isMissingNode && !properties["informatieobjecttypeUrls"].isEmpty
+            true
+//            !properties["informatieobjecttypeUrls"].isMissingNode && !properties["informatieobjecttypeUrls"].isEmpty
         }?.let {
             handleNewDocumentEvent(event, it)
         }

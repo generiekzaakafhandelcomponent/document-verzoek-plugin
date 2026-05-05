@@ -1,20 +1,26 @@
 [
-    {
-        "key": "summary",
-        "name": "Summary",
-        "type": "widgets",
-        "contentKey": "-"
-    },
-    {
-        "name": "Progress",
-        "key": "progress",
-        "type": "standard",
-        "contentKey": "progress"
-    },
-    {
-        "name": "Audit",
-        "key": "audit",
-        "type": "standard",
-        "contentKey": "audit"
-    }
+  {
+    "key": "summary",
+    "name": "Summary",
+    "type": "widgets",
+    "contentKey": "-"
+  },
+  {
+    "name": "Documents",
+    "key": "documents",
+    "type": "standard",
+    "contentKey": "documents"
+  },
+  {
+    "name": "Progress",
+    "key": "progress",
+    "type": "standard",
+    "contentKey": "progress"
+  },
+  {
+    "name": "Audit",
+    "key": "audit",
+    "type": "standard",
+    "contentKey": "audit"
+  }
 ]
