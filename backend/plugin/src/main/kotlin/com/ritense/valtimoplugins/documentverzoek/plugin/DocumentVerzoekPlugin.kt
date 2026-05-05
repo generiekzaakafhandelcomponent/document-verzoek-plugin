@@ -29,7 +29,6 @@ import com.ritense.plugin.domain.EventType
 import com.ritense.valtimo.service.ApplicationStateService
 import com.ritense.zakenapi.ZakenApiPlugin
 import com.ritense.zakenapi.repository.ZaakTypeLinkRepository
-import io.github.oshai.kotlinlogging.KotlinLogging
 
 @Plugin(
     key = "document-verzoek",

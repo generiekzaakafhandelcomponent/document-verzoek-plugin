@@ -81,10 +81,7 @@ class DocumentVerzoekPluginEventListener(
 
         pluginService.createInstance(
             DocumentVerzoekPlugin::class.java
-        ) { properties ->
-            true
-//            !properties["informatieobjecttypeUrls"].isMissingNode && !properties["informatieobjecttypeUrls"].isEmpty
-        }?.let {
+        ) { true }?.let {
             handleNewDocumentEvent(event, it)
         }
             ?: logger.warn { "DocumentVerzoekPlugin is ignoring Notificaties API event: No DocumentVerzoekPlugin found with list matching of informatieobjecttypes" }
@@ -133,7 +130,7 @@ class DocumentVerzoekPluginEventListener(
         plugin: DocumentVerzoekPlugin,
         zaakInformatieObject: ZaakInformatieObject,
         documentId: UUID,
-        resourceUrl: URI
+        resourceUrl: URI,
     ) {
         val auditTrail = plugin.documentenApiPlugin.getAuditTrail(
             zaakInformatieObject.informatieobject,
@@ -160,7 +157,8 @@ class DocumentVerzoekPluginEventListener(
                 documentId,
                 informatieObject.identificatie ?: "unknown"
             )
-        } ?: logger.warn { "DocumentVerzoekPlugin is ignoring Notificaties API event: No matching auditTrail applicatieId for '$resourceUrl'" }
+        }
+            ?: logger.warn { "DocumentVerzoekPlugin is ignoring Notificaties API event: No matching auditTrail applicatieId for '$resourceUrl'" }
     }
 
     private fun publishEvent(documentId: UUID, identificatie: String) {
