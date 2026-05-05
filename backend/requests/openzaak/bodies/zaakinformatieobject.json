@@ -1,0 +1,8 @@
+{
+  "informatieobject": "{{informatieobject_url}}",
+  "zaak": "{{zaak_url}}",
+  "titel": "de relatie",
+  "beschrijving": "test relatie",
+  "vernietigingsdatum": "2027-08-24T14:15:22Z",
+  "status": null
+}

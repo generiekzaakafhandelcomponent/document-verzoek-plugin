@@ -37,3 +37,16 @@ export function generateOpenZaakJwt(request) {
 
     return unsigned + "." + signature;
 }
+
+export function setOpenZaakToken(request, client) {
+    const jwt = generateOpenZaakJwt(request);
+    client.global.set("openzaak_token", jwt);
+}
+
+export function setOpenZaakHeaders(request, client) {
+    setOpenZaakToken(request, client);
+    client.global.headers.set("Accept", "application/json");
+    client.global.headers.set("Accept-Crs", "EPSG:4326");
+    client.global.headers.set("Content-Crs", "EPSG:4326");
+    client.global.headers.set("Authorization", "Bearer " + client.global.get("openzaak_token"));
+}

@@ -1,15 +1,10 @@
-### Generate JWT Token
+### Get zaken and set a zaak url
 < {%
-    import { generateOpenZaakJwt } from "../openzaak-jwt.js"
-    const jwt = generateOpenZaakJwt(request);
-    client.global.set("openzaak_token", jwt);
+    import { setOpenZaakHeaders } from "../openzaak-jwt.js"
+    setOpenZaakHeaders(request, client);
 %}
 
 GET {{openzaak_host}}/zaken/api/v1/zaken
-Accept: application/json
-Accept-Crs: EPSG:4326
-Content-Crs: EPSG:4326
-Authorization: Bearer {{openzaak_token}}
 
 > {%
     const json = response.body;
@@ -17,46 +12,28 @@ Authorization: Bearer {{openzaak_token}}
     client.global.set("zaak_url", zaak_url);
 %}
 
-### CreateEnkelvoudiginformatieobjecten
+### Create Enkelvoudiginformatieobjecten
+< {%
+    import { setOpenZaakHeaders } from "../openzaak-jwt.js"
+    setOpenZaakHeaders(request, client);
+%}
 POST {{openzaak_host}}documenten/api/v1/enkelvoudiginformatieobjecten
 Content-Type: application/json
-Accept: application/json
-Accept-Crs: EPSG:4326
-Content-Crs: EPSG:4326
-Authorization: Bearer {{openzaak_token}}
 
-{
-  "bronorganisatie": "051845623",
-  "creatiedatum": "2021-12-25",
-  "titel": "Title",
-  "auteur": "Ritense postman",
-  "bestandsnaam": "kofax doc",
-  "taal": "nld",
-  "inhoud": "dGVzdA==",
-  "informatieobjecttype": "{{openzaak_host}}catalogi/api/v1/informatieobjecttypen/38548709-1da8-42df-93c2-f1b569446e4c",
-  "status": "definitief",
-  "indicatieGebruiksrecht": false,
-  "trefwoorden": ["existing"]
-}
+< ./bodies/enkelvoudiginformatieobject.json
 
 > {%
     const json = response.body;
     client.global.set("informatieobject_url", json.url);
 %}
 
-### KoppelInformatieObjectAanZaak
+### Koppel Enkelvoudiginformatieobject aan InformatieObjectAanZaak
+< {%
+    import { setOpenZaakHeaders } from "../openzaak-jwt.js"
+    setOpenZaakHeaders(request, client);
+%}
+
 POST {{openzaak_host}}zaken/api/v1/zaakinformatieobjecten
 Content-Type: application/json
-Accept: application/json
-Accept-Crs: EPSG:4326
-Content-Crs: EPSG:4326
-Authorization: Bearer {{openzaak_token}}
 
-{
-  "informatieobject": "{{informatieobject_url}}",
-  "zaak": "{{zaak_url}}",
-  "titel": "de relatie",
-  "beschrijving": "test relatie",
-  "vernietigingsdatum": "2027-08-24T14:15:22Z",
-  "status": null
-}
+< ./bodies/zaakinformatieobject.json
