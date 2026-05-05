@@ -17,11 +17,11 @@
 import {PluginConfigurationData} from "@valtimo/plugin";
 
 interface DocumentVerzoekPluginConfig extends PluginConfigurationData {
-  apiUrl: string;
+  notificatiesApiPluginConfiguration: string;
+  zakenApiPlugin: string;
+  documentenApiPlugin: string;
+  eventMessage: string;
+  applicatieId: string;
 }
 
-interface DocumentVerzoekActionConfig {
-  message: string;
-}
-
-export {DocumentVerzoekPluginConfig, DocumentVerzoekActionConfig};
+export {DocumentVerzoekPluginConfig};

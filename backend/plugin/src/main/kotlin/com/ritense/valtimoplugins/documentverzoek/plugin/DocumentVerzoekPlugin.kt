@@ -57,6 +57,9 @@ class DocumentVerzoekPlugin(
     @PluginProperty(key = "eventMessage", secret = false)
     lateinit var eventMessage: String
 
+    @PluginProperty(key = "applicatieId", secret = false)
+    lateinit var applicatieId: String
+
     @PluginEvent(invokedOn = [EventType.CREATE, EventType.UPDATE])
 
     fun validateProperties() {

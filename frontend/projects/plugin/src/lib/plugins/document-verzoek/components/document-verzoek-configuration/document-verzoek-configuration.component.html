@@ -81,6 +81,19 @@
     ></v-select>
   </ng-container>
   <v-input
+    name="applicatieId"
+    data-test-id="applicatieId"
+    [title]="'applicatieId' | pluginTranslate: pluginId | async"
+    [margin]="true"
+    [disabled]="obs.disabled"
+    [defaultValue]="obs.prefill?.applicatieId"
+    [required]="true"
+    [trim]="true"
+    [tooltip]="'applicatieIdTooltip' | pluginTranslate: pluginId | async"
+    placeholder=""
+  >
+  </v-input>
+  <v-input
     name="eventMessage"
     data-test-id="verzoekEventMessage"
     [title]="'eventMessage' | pluginTranslate: pluginId | async"
