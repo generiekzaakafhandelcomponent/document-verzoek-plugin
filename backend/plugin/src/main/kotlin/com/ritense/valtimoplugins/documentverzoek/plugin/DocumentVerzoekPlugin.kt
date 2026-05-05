@@ -31,8 +31,6 @@ import com.ritense.zakenapi.ZakenApiPlugin
 import com.ritense.zakenapi.repository.ZaakTypeLinkRepository
 import io.github.oshai.kotlinlogging.KotlinLogging
 
-private val logger = KotlinLogging.logger {}
-
 @Plugin(
     key = "document-verzoek",
     title = "Document Verzoek",
