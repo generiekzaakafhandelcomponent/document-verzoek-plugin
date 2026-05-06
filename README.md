@@ -22,8 +22,7 @@ Using the plugin comes down to a simple steps:
 The message contains the following properties:
 * `zaakinformatieobject` - The enkelvoudigeInformatieobject that is waiting on the message intermediate catch event.
 * `enkelvoudigeInformatieobject` - The enkelvoudigeInformatieobject that is waiting on the message intermediate catch event
-
-## Dependencies and running the application
+ Dependencies and running the application
 * See [running example](documentation/example-application.md)
 * See [dependencies](documentation/plugin.md)
 
