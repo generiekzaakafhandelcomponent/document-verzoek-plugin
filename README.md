@@ -19,6 +19,10 @@ Using the plugin comes down to a simple steps:
   * `applicatieId` - The ID of the applicatie in OpenZaak used for authentication. When the plugin receives a notification from the Notifications API, it will ignore the events with this applicatie ID.
 * Create a message intermediate catch event in a process for handling the message delivered to the process instance.
 
+The message contains the following properties:
+* `zaakinformatieobject` - The enkelvoudigeInformatieobject that is waiting on the message intermediate catch event.
+* `enkelvoudigeInformatieobject` - The enkelvoudigeInformatieobject that is waiting on the message intermediate catch event
+
 ## Dependencies and running the application
 * See [running example](documentation/example-application.md)
 * See [dependencies](documentation/plugin.md)
