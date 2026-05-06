@@ -38,3 +38,7 @@ You might need to add a new version of the plugin using other filters.
    [DocumentVerzoekPlugin](backend/plugin/src/main/kotlin/com/ritense/valtimoplugins/documentverzoek/plugin/DocumentVerzoekPlugin.kt).
 2. Update the README if necessary.
 3. Increase the plugin version in the [plugin.properties](backend/plugin/plugin.properties).
+
+## Contact
+
+Paul van Beukering (Ritense)
