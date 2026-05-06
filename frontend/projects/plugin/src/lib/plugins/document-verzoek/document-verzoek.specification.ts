@@ -40,6 +40,8 @@ const documentVerzoekPluginSpecification: PluginSpecification = {
         'Documenten API-plugin die wordt gebruikt om het informatie object op te halen',
       informatieobjecttypeUrls: 'InformatieObject type Urls',
       informatieobjecttypeUrl: 'InformatieObject type Url',
+      applicatieId: 'Applicatie Id',
+      applicatieIdTooltip: 'Applicatie Id in OpenZaak gebruikt voor Authenticatie',
       type: 'Type',
       eventMessage: 'Message event naam',
       eventMessageTooltip:
@@ -55,6 +57,7 @@ const documentVerzoekPluginSpecification: PluginSpecification = {
       notificatiesApiPluginConfigurationTooltip:
         'Configuratie van de Notificaties API die wordt gebruikt om te communiceren tussen GZAC en andere applicaties.',
       typeTooltip: 'Het zaak type waarvoor document typen worden verwerkt',
+
       close: 'Sluiten',
       save: 'Opslaan',
     },
@@ -70,6 +73,8 @@ const documentVerzoekPluginSpecification: PluginSpecification = {
       zakenApiPluginTooltip: 'Zaken API-plugin used to retrieve the Zaak Informatie Object',
       documentenApiPlugin: 'Documenten API-plugin',
       documentenApiPluginTooltip: 'Documenten API-plugin used to retrieve the information object',
+      applicatieId: 'Application Id',
+      applicatieIdTooltip: 'Application Id in the OpenZaak Used for Authentication',
       informatieobjecttypeUrls: 'InformatieObject type Urls',
       addInformatieobjecttypeUrl: 'Add InformatieObject type Url',
       informatieobjecttypeUrlTooltip:
