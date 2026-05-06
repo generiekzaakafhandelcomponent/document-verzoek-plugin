@@ -27,7 +27,7 @@ Content-Type: application/json
     client.global.set("informatieobject_url", json.url);
 %}
 
-### Koppel Enkelvoudiginformatieobject aan InformatieObjectAanZaak
+### Maak zaakinformatie object aan en koppel enkelvoudiginformatieobject aan Zaak
 < {%
     import { setOpenZaakHeaders } from "../openzaak-jwt.js"
     setOpenZaakHeaders(request, client);

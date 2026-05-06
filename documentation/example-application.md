@@ -53,5 +53,5 @@ The example application has a few test users that are preconfigured.
 
 The source code is split up into two modules:
 
-1. [Frontend](/frontend)
-2. [Backend](/backend)
+1. [Frontend](/frontend/)
+2. [Backend](/backend/)
