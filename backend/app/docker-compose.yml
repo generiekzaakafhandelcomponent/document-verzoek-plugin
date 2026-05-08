@@ -1,4 +1,4 @@
-name: plugin-docker-compose
+name: document-verzoeken-gzac
 
 services:
   plugin-keycloak:
@@ -363,6 +363,7 @@ services:
       - CELERY_WORKER_CONCURRENCY=${CELERY_WORKER_CONCURRENCY:-4}
       - SUBPATH=${SUBPATH:-/}
       - DISABLE_2FA=True
+      - LOG_NOTIFICATIONS_IN_DB=true
     command: /celery_worker.sh
     depends_on:
       - open-notificaties-database

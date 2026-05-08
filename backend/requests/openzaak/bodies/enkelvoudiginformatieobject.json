@@ -6,7 +6,7 @@
   "bestandsnaam": "kofax doc",
   "taal": "nld",
   "inhoud": "dGVzdA==",
-  "informatieobjecttype": "{{openzaak_host}}catalogi/api/v1/informatieobjecttypen/38548709-1da8-42df-93c2-f1b569446e4c",
+  "informatieobjecttype": "{{openzaak_host}}catalogi/api/v1/informatieobjecttypen/{{Informatieobjecttype}}",
   "status": "definitief",
   "indicatieGebruiksrecht": false,
   "trefwoorden": ["existing"]
