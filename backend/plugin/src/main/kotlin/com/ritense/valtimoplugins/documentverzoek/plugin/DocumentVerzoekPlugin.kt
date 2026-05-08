@@ -83,9 +83,7 @@ class DocumentVerzoekPlugin(
                 Abonnement.Kanaal(
                     naam = "zaken",
                     filters = mapOf(
-                        "zaaktype" to zaakTypeLink.zaakTypeUrl.toString(),
-                        "actie" to "create",
-                        "resource" to "zaakinformatieobject"
+                        "zaaktype" to zaakTypeLink.zaakTypeUrl.toString()
                     )
                 )
             }

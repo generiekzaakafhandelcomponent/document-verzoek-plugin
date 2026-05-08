@@ -139,7 +139,7 @@ class DocumentVerzoekPluginEventListener(
         logger.debug { "DocumentVerzoekPlugin: checking auditTrail for '${zaakInformatieObject.informatieobject}': $auditTrail" }
 
         auditTrail.firstOrNull { it.applicatieId != plugin.applicatieId }?.let {
-            logger.debug { "DocumentVerzoekPlugin: applicatieId matches current applicatie" }
+            logger.debug { "DocumentVerzoekPlugin: applicatieId is different, external document: ${it.applicatieId} internal document: ${plugin.applicatieId}" }
 
             val informatieObject = plugin.documentenApiPlugin.getInformatieObject(
                 zaakInformatieObject.informatieobject,
