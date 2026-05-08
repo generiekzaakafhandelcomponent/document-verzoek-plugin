@@ -1,0 +1,12 @@
+[
+  {
+    "key": "taskname",
+    "title": "Task name",
+    "path": "task:name",
+    "dataType": "text",
+    "fieldType": "single",
+    "matchType": "like",
+    "dropdownDataProvider": null,
+    "required": false
+  }
+]

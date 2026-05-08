@@ -1,0 +1,13 @@
+{
+    "components": [
+        {
+            "type": "button",
+            "label": "nieuw document ontvangen",
+            "showValidations": false,
+            "disableOnInvalid": true,
+            "tableView": false,
+            "key": "submit",
+            "input": true
+        }
+    ]
+}

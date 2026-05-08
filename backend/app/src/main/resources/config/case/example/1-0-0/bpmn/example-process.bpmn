@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0">
   <bpmn:collaboration id="Collaboration_1">
     <bpmn:participant id="example-participant" name="Example Process" processRef="example-process" />
   </bpmn:collaboration>
@@ -19,10 +19,10 @@
       <bpmn:messageEventDefinition id="MessageEventDefinition_0fgda1t" messageRef="Message_18jg0tj" />
     </bpmn:intermediateCatchEvent>
     <bpmn:sequenceFlow id="Flow_1qd1ud5" sourceRef="ConfirmReceivedDocument" targetRef="end-event" />
-    <bpmn:serviceTask id="ConfirmReceivedDocument" name="Confirm received document" camunda:expression="${true}">
+    <bpmn:userTask id="ConfirmReceivedDocument" name="Confirm received document">
       <bpmn:incoming>Flow_0nqmpq1</bpmn:incoming>
       <bpmn:outgoing>Flow_1qd1ud5</bpmn:outgoing>
-    </bpmn:serviceTask>
+    </bpmn:userTask>
   </bpmn:process>
   <bpmn:message id="Message_18jg0tj" name="DOCUMENT_RECEIVED" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
@@ -48,9 +48,8 @@
           <dc:Bounds x="304" y="225" width="82" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1mod9db_di" bpmnElement="ConfirmReceivedDocument">
+      <bpmndi:BPMNShape id="Activity_090zis5_di" bpmnElement="ConfirmReceivedDocument">
         <dc:Bounds x="400" y="160" width="100" height="80" />
-        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
         <di:waypoint x="268" y="200" />
