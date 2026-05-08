@@ -1,8 +1,14 @@
 [
-    {
-        "activityId": "start-event",
-        "activityType": "bpmn:StartEvent:start",
-        "processLinkType": "form",
-        "formDefinitionName": "start-form-example"
-    }
+  {
+    "activityId": "start-event",
+    "activityType": "bpmn:StartEvent:start",
+    "processLinkType": "form",
+    "formDefinitionName": "start-form-example"
+  },
+  {
+    "activityId": "ConfirmReceivedDocument",
+    "activityType": "bpmn:UserTask:create",
+    "formDefinitionName": "external-document-event-received",
+    "processLinkType": "form"
+  }
 ]
