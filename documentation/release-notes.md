@@ -2,9 +2,6 @@
 
 Overzicht van wijzigingen per versie van de Document Verzoek-plugin.
 
-## 1.0.0
-Ondergebracht in een eigen repository met voorbeeldapplicatie en aparte documentatie.
-
 ## 0.9.3
 Verbeterde verwerking van documenten die buiten de eigen applicatie aan een zaak worden toegevoegd, met fijnmazigere abonnementfilters en duidelijkere logging.
 
