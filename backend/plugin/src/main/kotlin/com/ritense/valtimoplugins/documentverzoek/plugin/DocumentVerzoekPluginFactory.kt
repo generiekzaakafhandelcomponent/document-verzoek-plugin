@@ -26,14 +26,12 @@ class DocumentVerzoekPluginFactory(
     pluginService: PluginService,
     private val applicationStateService: ApplicationStateService,
     private val zaakTypeLinkRepository: ZaakTypeLinkRepository,
-    private val caseDefinitionService: CaseDefinitionService
+    private val caseDefinitionService: CaseDefinitionService,
 ) : PluginFactory<DocumentVerzoekPlugin>(pluginService) {
-
-    override fun create(): DocumentVerzoekPlugin {
-        return DocumentVerzoekPlugin(
+    override fun create(): DocumentVerzoekPlugin =
+        DocumentVerzoekPlugin(
             applicationStateService,
             zaakTypeLinkRepository,
-            caseDefinitionService
+            caseDefinitionService,
         )
-    }
 }

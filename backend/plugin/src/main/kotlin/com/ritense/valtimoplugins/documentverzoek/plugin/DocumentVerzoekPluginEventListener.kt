@@ -54,37 +54,48 @@ class DocumentVerzoekPluginEventListener(
     private val environment: Environment,
     private val applicationEventPublisher: ApplicationEventPublisher,
 ) {
-
     @Transactional
     @RunWithoutAuthorization
     @EventListener(NotificatiesApiNotificationReceivedEvent::class)
     fun handleEvent(event: NotificatiesApiNotificationReceivedEvent) {
         // check if event is relevant for this filter
         if (!event.kanaal.equals("zaken", ignoreCase = true)) {
-            logger.debug { "DocumentVerzoekPlugin is ignoring Notificaties API event: Event kanaal '${event.kanaal}' doesn't match 'zaken'" }
+            logger.debug {
+                "DocumentVerzoekPlugin is ignoring Notificaties API event: Event kanaal '${event.kanaal}' doesn't match 'zaken'"
+            }
             return
         }
         // Accept both 'zaakType' and 'zaaktype' as provided by the Notificaties API
         val zaakType = event.kenmerken["zaakType"] ?: event.kenmerken["zaaktype"]
         if (zaakType == null) {
-            logger.debug { "DocumentVerzoekPlugin is ignoring Notificaties API event: Event kenmerk 'zaakType' is null" }
+            logger.debug {
+                "DocumentVerzoekPlugin is ignoring Notificaties API event: Event kenmerk 'zaakType' is null"
+            }
             return
         }
         if (event.resource?.equals("zaakinformatieobject", ignoreCase = true) != true) {
-            logger.debug { "DocumentVerzoekPlugin is ignoring Notificaties API event: Event 'resource' is not zaakinformatieobject" }
+            logger.debug {
+                "DocumentVerzoekPlugin is ignoring Notificaties API event: Event 'resource' is not zaakinformatieobject"
+            }
             return
         }
         if (!event.actie.equals("create", ignoreCase = true)) {
-            logger.debug { "DocumentVerzoekPlugin is ignoring Notificaties API event: Event actie '${event.actie}' doesn't match 'create'" }
+            logger.debug {
+                "DocumentVerzoekPlugin is ignoring Notificaties API event: Event actie '${event.actie}' doesn't match 'create'"
+            }
             return
         }
 
-        pluginService.createInstance(
-            DocumentVerzoekPlugin::class.java
-        ) { true }?.let {
-            handleNewDocumentEvent(event, it)
-        }
-            ?: logger.warn { "DocumentVerzoekPlugin is ignoring Notificaties API event: No DocumentVerzoekPlugin found with list matching of informatieobjecttypes" }
+        pluginService
+            .createInstance(
+                DocumentVerzoekPlugin::class.java,
+            ) { true }
+            ?.let {
+                handleNewDocumentEvent(event, it)
+            }
+            ?: logger.warn {
+                "DocumentVerzoekPlugin is ignoring Notificaties API event: No DocumentVerzoekPlugin found with list matching of informatieobjecttypes"
+            }
     }
 
     private fun handleNewDocumentEvent(
@@ -98,31 +109,36 @@ class DocumentVerzoekPluginEventListener(
             return
         }
 //        val (zaakUrl, resourceUrl) = hoofdObject to URI(event.resourceUrl)
-        val (zaakUrl, resourceUrl) = if (environment.activeProfiles.contains("dev")) {
-            hoofdObject.replace(
-                "host.docker.internal",
-                "localhost"
-            ) to URI(event.resourceUrl.replace("host.docker.internal", "localhost"))
-        } else {
-            hoofdObject to URI(event.resourceUrl)
-        }
+        val (zaakUrl, resourceUrl) =
+            if (environment.activeProfiles.contains("dev")) {
+                hoofdObject.replace(
+                    "host.docker.internal",
+                    "localhost",
+                ) to URI(event.resourceUrl.replace("host.docker.internal", "localhost"))
+            } else {
+                hoofdObject to URI(event.resourceUrl)
+            }
 
         // is this zaak present?
         run {
-            val zaak = try {
-                zaakInstanceLinkService.getByZaakInstanceUrl(URI(zaakUrl))
-            } catch (ex: ZaakInstanceLinkNotFoundException) {
-                logger.warn { "DocumentVerzoekPlugin is ignoring Notificaties API event: no ZaakInstanceLink found for zaakUrl '$zaakUrl'" }
-                return
-            }
+            val zaak =
+                try {
+                    zaakInstanceLinkService.getByZaakInstanceUrl(URI(zaakUrl))
+                } catch (ex: ZaakInstanceLinkNotFoundException) {
+                    logger.warn {
+                        "DocumentVerzoekPlugin is ignoring Notificaties API event: no ZaakInstanceLink found for zaakUrl '$zaakUrl'"
+                    }
+                    return
+                }
 
             // get zaak informatie object
-            plugin.zakenApiPlugin.getZaakInformatieObjectByUrl(
-                resourceUrl,
-                zaak.documentId
-            ).let { zaakInformatieObject ->
-                processInformatieObjectWithAuditTrail(plugin, zaakInformatieObject, zaak.documentId, resourceUrl)
-            }
+            plugin.zakenApiPlugin
+                .getZaakInformatieObjectByUrl(
+                    resourceUrl,
+                    zaak.documentId,
+                ).let { zaakInformatieObject ->
+                    processInformatieObjectWithAuditTrail(plugin, zaakInformatieObject, zaak.documentId, resourceUrl)
+                }
         }
     }
 
@@ -132,44 +148,55 @@ class DocumentVerzoekPluginEventListener(
         documentId: UUID,
         resourceUrl: URI,
     ) {
-        val auditTrail = plugin.documentenApiPlugin.getAuditTrail(
-            zaakInformatieObject.informatieobject,
-            documentId
-        )
-        logger.debug { "DocumentVerzoekPlugin: checking auditTrail for '${zaakInformatieObject.informatieobject}': $auditTrail" }
+        val auditTrail =
+            plugin.documentenApiPlugin.getAuditTrail(
+                zaakInformatieObject.informatieobject,
+                documentId,
+            )
+        logger.debug {
+            "DocumentVerzoekPlugin: checking auditTrail for '${zaakInformatieObject.informatieobject}': $auditTrail"
+        }
 
         auditTrail.firstOrNull { it.applicatieId != plugin.applicatieId }?.let {
-            logger.debug { "DocumentVerzoekPlugin: applicatieId is different, external document: ${it.applicatieId} internal document: ${plugin.applicatieId}" }
+            logger.debug {
+                "DocumentVerzoekPlugin: applicatieId is different, external document: ${it.applicatieId} internal document: ${plugin.applicatieId}"
+            }
 
-            val informatieObject = plugin.documentenApiPlugin.getInformatieObject(
-                zaakInformatieObject.informatieobject,
-                documentId
-            )
+            val informatieObject =
+                plugin.documentenApiPlugin.getInformatieObject(
+                    zaakInformatieObject.informatieobject,
+                    documentId,
+                )
 
             sendMessage(
                 documentId.toString(),
                 plugin.eventMessage,
                 zaakInformatieObject,
-                informatieObject
+                informatieObject,
             )
 
             publishEvent(
                 documentId,
-                informatieObject.identificatie ?: "unknown"
+                informatieObject.identificatie ?: "unknown",
             )
         }
-            ?: logger.warn { "DocumentVerzoekPlugin is ignoring Notificaties API event: No matching auditTrail applicatieId for '$resourceUrl'" }
+            ?: logger.warn {
+                "DocumentVerzoekPlugin is ignoring Notificaties API event: No matching auditTrail applicatieId for '$resourceUrl'"
+            }
     }
 
-    private fun publishEvent(documentId: UUID, identificatie: String) {
+    private fun publishEvent(
+        documentId: UUID,
+        identificatie: String,
+    ) {
         applicationEventPublisher.publishEvent(
             InformatieObjectReceivedEvent(
                 RequestHelper.getOrigin(),
                 LocalDateTime.now(),
                 AuditHelper.getActor(),
                 documentId,
-                identificatie
-            )
+                identificatie,
+            ),
         )
     }
 
@@ -182,12 +209,16 @@ class DocumentVerzoekPluginEventListener(
         documentService.get(documentId).let { doc ->
             processDocumentService.findProcessDocumentInstances(doc.id()).forEach { procInst ->
                 procInst.id?.let { procInst ->
-                    val response = runtimeService.createMessageCorrelation(eventMessage)
-                        .processInstanceId(procInst.processInstanceId().toString())
-                        .setVariable("zaakInformatieObject", objectMapper.convertValue(zaakInformatieObject))
-                        .setVariable("informatieObject", objectMapper.convertValue(informatieObject))
-                        .correlateAll()
-                    logger.debug { "DocumentVerzoekPlugin: message '${eventMessage}' sent to process instance '${procInst.processInstanceId()}' with response '${response}'" }
+                    val response =
+                        runtimeService
+                            .createMessageCorrelation(eventMessage)
+                            .processInstanceId(procInst.processInstanceId().toString())
+                            .setVariable("zaakInformatieObject", objectMapper.convertValue(zaakInformatieObject))
+                            .setVariable("informatieObject", objectMapper.convertValue(informatieObject))
+                            .correlateAll()
+                    logger.debug {
+                        "DocumentVerzoekPlugin: message '$eventMessage' sent to process instance '${procInst.processInstanceId()}' with response '$response'"
+                    }
                 }
             }
         }

@@ -17,5 +17,5 @@
 package com.ritense.valtimoplugins.documentverzoek.domain
 
 data class InformatieobjecttypeUrl(
-    val url: String
+    val url: String,
 )

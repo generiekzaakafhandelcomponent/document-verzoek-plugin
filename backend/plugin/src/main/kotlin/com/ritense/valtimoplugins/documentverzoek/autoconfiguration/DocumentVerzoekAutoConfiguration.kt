@@ -25,31 +25,29 @@ import com.ritense.valtimoplugins.documentverzoek.plugin.DocumentVerzoekPluginEv
 import com.ritense.valtimoplugins.documentverzoek.plugin.DocumentVerzoekPluginFactory
 import com.ritense.zakenapi.link.ZaakInstanceLinkService
 import com.ritense.zakenapi.repository.ZaakTypeLinkRepository
-import org.springframework.core.env.Environment
 import org.operaton.bpm.engine.RuntimeService
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.annotation.Bean
+import org.springframework.core.env.Environment
 
 @AutoConfiguration
 class DocumentVerzoekAutoConfiguration {
-
     @Bean
     @ConditionalOnMissingBean(DocumentVerzoekPluginFactory::class)
     fun documentVerzoekPluginFactory(
         pluginService: PluginService,
         applicationStateService: ApplicationStateService,
         zaakTypeLinkRepository: ZaakTypeLinkRepository,
-        caseDefinitionService: CaseDefinitionService
-    ): DocumentVerzoekPluginFactory {
-        return DocumentVerzoekPluginFactory(
+        caseDefinitionService: CaseDefinitionService,
+    ): DocumentVerzoekPluginFactory =
+        DocumentVerzoekPluginFactory(
             pluginService,
             applicationStateService,
             zaakTypeLinkRepository,
-            caseDefinitionService
+            caseDefinitionService,
         )
-    }
 
     @Bean
     @ConditionalOnMissingBean(DocumentVerzoekPluginEventListener::class)
@@ -60,16 +58,15 @@ class DocumentVerzoekAutoConfiguration {
         documentService: DocumentService,
         pluginService: PluginService,
         environment: Environment,
-        applicationEventPublisher: ApplicationEventPublisher
-    ): DocumentVerzoekPluginEventListener {
-        return DocumentVerzoekPluginEventListener(
+        applicationEventPublisher: ApplicationEventPublisher,
+    ): DocumentVerzoekPluginEventListener =
+        DocumentVerzoekPluginEventListener(
             zaakInstanceLinkService,
             runtimeService,
             operatonProcessJsonSchemaDocumentAssociationService,
             documentService,
             pluginService,
             environment,
-            applicationEventPublisher
+            applicationEventPublisher,
         )
-    }
 }

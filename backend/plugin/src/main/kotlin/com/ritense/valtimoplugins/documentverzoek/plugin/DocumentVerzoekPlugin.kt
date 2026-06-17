@@ -33,15 +33,13 @@ import com.ritense.zakenapi.repository.ZaakTypeLinkRepository
 @Plugin(
     key = "document-verzoek",
     title = "Document Verzoek",
-    description = "Handles document verzoeken"
+    description = "Handles document verzoeken",
 )
 class DocumentVerzoekPlugin(
     private val applicationStateService: ApplicationStateService,
     private val zaakTypeLinkRepository: ZaakTypeLinkRepository,
     private val caseDefinitionService: CaseDefinitionService,
-
-    ) : NotificatiesApiListener {
-
+) : NotificatiesApiListener {
     @PluginProperty(key = "notificatiesApiPluginConfiguration", secret = false)
     lateinit var notificatiesApiPluginConfiguration: NotificatiesApiPlugin
 
@@ -58,33 +56,36 @@ class DocumentVerzoekPlugin(
     lateinit var applicatieId: String
 
     @PluginEvent(invokedOn = [EventType.CREATE, EventType.UPDATE])
-
     fun validateProperties() {
         if (!applicationStateService.isApplicationReady()) {
-            return // Skip validation: Case Definition might not exist yet because the auto deployment of Case Definitions happens later.
+            // Skip validation: Case Definition might not exist yet because
+            // auto deployment of Case Definitions happens later.
+            return
         }
     }
 
-    override fun getNotificatiesApiPlugin(): NotificatiesApiPlugin {
-        return notificatiesApiPluginConfiguration
-    }
+    override fun getNotificatiesApiPlugin(): NotificatiesApiPlugin = notificatiesApiPluginConfiguration
 
     override fun getKanaalFilters(): List<Abonnement.Kanaal> {
         return runWithoutAuthorization {
-            (caseDefinitionService.getCaseDefinitions(active = true, final = false) +
-                caseDefinitionService.getCaseDefinitions(
-                    active = true,
-                    final = true
-                )).mapNotNull { caseDefinition ->
+            (
+                caseDefinitionService.getCaseDefinitions(active = true, final = false) +
+                    caseDefinitionService.getCaseDefinitions(
+                        active = true,
+                        final = true,
+                    )
+            ).mapNotNull { caseDefinition ->
 
-                val zaakTypeLink = zaakTypeLinkRepository.findByCaseDefinitionId(caseDefinition.id)
-                    ?: return@mapNotNull null
+                val zaakTypeLink =
+                    zaakTypeLinkRepository.findByCaseDefinitionId(caseDefinition.id)
+                        ?: return@mapNotNull null
 
                 Abonnement.Kanaal(
                     naam = "zaken",
-                    filters = mapOf(
-                        "zaaktype" to zaakTypeLink.zaakTypeUrl.toString()
-                    )
+                    filters =
+                        mapOf(
+                            "zaaktype" to zaakTypeLink.zaakTypeUrl.toString(),
+                        ),
                 )
             }
         }.distinct()
