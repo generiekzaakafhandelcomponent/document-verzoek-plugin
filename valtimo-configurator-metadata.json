@@ -1,0 +1,18 @@
+{
+    "name": "document-verzoek",
+    "version": 1,
+    "backend": [
+        {
+            "import": "com.ritense.valtimoplugins:document-verzoek"
+        }
+    ],
+    "frontend": {
+        "import": "@valtimo-plugins/document-verzoek",
+        "codeAdditions": [
+            {
+                "spec": "documentVerzoekPluginSpecification",
+                "module": "DocumentVerzoekPluginModule"
+            }
+        ]
+    }
+}

@@ -23,50 +23,49 @@ import com.fasterxml.jackson.annotation.JsonView
 import com.ritense.valtimo.contract.audit.AuditEvent
 import com.ritense.valtimo.contract.audit.AuditMetaData
 import com.ritense.valtimo.contract.audit.view.AuditView
-import com.ritense.valtimo.contract.utils.AssertionConcern
 import com.ritense.valtimo.contract.utils.AssertionConcern.assertArgumentNotNull
 import java.time.LocalDateTime
 import java.util.Objects
 import java.util.UUID
 
-class InformatieObjectReceivedEvent @JsonCreator constructor(
-    origin: String,
-    occurredOn: LocalDateTime,
-    user: String,
-    private var documentId: UUID,
-    private var identificatie: String
-) : AuditMetaData(UUID.randomUUID(), origin, occurredOn, user), AuditEvent {
+class InformatieObjectReceivedEvent
+    @JsonCreator
+    constructor(
+        origin: String,
+        occurredOn: LocalDateTime,
+        user: String,
+        private var documentId: UUID,
+        private var identificatie: String,
+    ) : AuditMetaData(UUID.randomUUID(), origin, occurredOn, user),
+        AuditEvent {
+        init {
+            assertArgumentNotNull(documentId, "documentId is required")
+            assertArgumentNotNull(identificatie, "informationObjectId.identificatie  is required")
+        }
 
-    init {
-        assertArgumentNotNull(documentId, "documentId is required")
-        assertArgumentNotNull(identificatie, "informationObjectId.identificatie  is required")
+        fun setDocumentId(documentId: UUID) {
+            this.documentId = documentId
+        }
+
+        fun setIdentificatie(identificatie: String) {
+            this.identificatie = identificatie
+        }
+
+        @JsonView(AuditView.Internal::class)
+        @JsonIgnore(false)
+        override fun getDocumentId(): UUID = documentId
+
+        @JsonProperty
+        @JsonView(AuditView.Public::class)
+        fun getIdentificatie() = identificatie
+
+        override fun equals(other: Any?): Boolean {
+            if (this === other) return true
+            if (other !is InformatieObjectReceivedEvent) return false
+            if (!super.equals(other)) return false
+
+            return identificatie == other.identificatie && documentId == other.documentId
+        }
+
+        override fun hashCode(): Int = Objects.hash(super.hashCode(), identificatie, documentId)
     }
-
-    fun setDocumentId(documentId: UUID) {
-        this.documentId = documentId
-    }
-
-    fun setIdentificatie(identificatie: String) {
-        this.identificatie = identificatie
-    }
-
-    @JsonView(AuditView.Internal::class)
-    @JsonIgnore(false)
-    override fun getDocumentId(): UUID = documentId
-
-    @JsonProperty
-    @JsonView(AuditView.Public::class)
-    fun getIdentificatie() = identificatie
-
-    override fun equals(other: Any?): Boolean {
-        if (this === other) return true
-        if (other !is InformatieObjectReceivedEvent) return false
-        if (!super.equals(other)) return false
-
-        return identificatie == other.identificatie && documentId == other.documentId
-    }
-
-    override fun hashCode(): Int {
-        return Objects.hash(super.hashCode(), identificatie, documentId)
-    }
-}

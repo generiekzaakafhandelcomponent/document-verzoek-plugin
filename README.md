@@ -25,6 +25,7 @@ The message contains the following properties:
  Dependencies and running the application
 * See [running example](documentation/example-application.md)
 * See [dependencies](documentation/plugin.md)
+* See [Release notes](documentation/release-notes.md) — versiegeschiedenis en wijzigingen
 
 ## Development
 
