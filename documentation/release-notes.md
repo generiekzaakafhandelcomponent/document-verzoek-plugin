@@ -2,6 +2,10 @@
 
 Overzicht van wijzigingen per versie van de Document Verzoek-plugin.
 
+## 0.9.4
+
+Valtimo bijgewerkt naar versie 13.41.0.
+
 ## 0.9.3
 Verbeterde verwerking van documenten die buiten de eigen applicatie aan een zaak worden toegevoegd, met fijnmazigere abonnementfilters en duidelijkere logging.
 
