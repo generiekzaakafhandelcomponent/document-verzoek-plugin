@@ -33,7 +33,7 @@ dependencies {
     compileOnly("com.ritense.valtimo:plugin-valtimo")
     compileOnly("com.ritense.valtimo:process-document")
     compileOnly("com.ritense.valtimo:contract")
-    implementation("com.ritense.valtimo:valtimo-gzac-dependencies")
+    compileOnly("com.ritense.valtimo:valtimo-gzac-dependencies:$valtimoVersion")
     compileOnly("org.operaton.bpm:operaton-engine:$operatonVersion")
     compileOnly("org.springframework.boot:spring-boot-autoconfigure")
     compileOnly("org.springframework.boot:spring-boot-starter-web")
@@ -46,6 +46,7 @@ dependencies {
     testImplementation("com.ritense.valtimo:building-block")
     testImplementation("com.ritense.valtimo:local-resource")
     testImplementation("com.ritense.valtimo:test-utils-common")
+    testImplementation("com.ritense.valtimo:valtimo-gzac-dependencies:$valtimoVersion")
 
     testImplementation("org.springframework.boot:spring-boot-starter-web")
     testImplementation("org.springframework.boot:spring-boot-starter-data-jpa")
