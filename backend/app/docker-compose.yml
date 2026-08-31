@@ -42,8 +42,8 @@ services:
       POSTGRES_USER: keycloak
       POSTGRES_PASSWORD: keycloak
 
-  plugin-database:
-    container_name: document-verzoek-plugin-database
+  gzac-database:
+    container_name: document-verzoek-gzac-database
     image: postgres:17.4
     ports:
       - "54320:5432"
@@ -52,7 +52,7 @@ services:
       POSTGRES_PASSWORD: password
       POSTGRES_DB: plugin
     volumes:
-      - plugin-database-data:/var/lib/postgres # persist data even if container shuts down
+      - gzac-database-data:/var/lib/postgres # persist data even if container shuts down
 
   plugin-rabbitmq:
     image: rabbitmq:4.1.0-management
@@ -558,5 +558,5 @@ services:
       - openklant
 
 volumes:
-  plugin-database-data:
+  gzac-database-data:
   openzaak-private-media:

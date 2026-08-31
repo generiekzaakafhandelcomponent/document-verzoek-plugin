@@ -44,6 +44,8 @@
         "delete",
         "modify",
         "view",
+        "inspect",
+        "inspect_modify",
         "view_list"
       ],
       "roleKey": "ROLE_USER",
