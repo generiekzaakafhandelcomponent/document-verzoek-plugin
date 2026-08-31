@@ -4,7 +4,7 @@
   "pk": 1,
   "fields": {
     "password": "pbkdf2_sha256$1000000$C2tukNpgAmgmfngTWDPfGV$RPPckMOXa7PxpqONIkpw+aPgxsxSFLrgRAiR7Wh28qY=",
-    "last_login": "2026-01-21T10:59:08.735Z",
+    "last_login": "2026-08-31T20:09:54.746Z",
     "is_superuser": true,
     "username": "admin",
     "first_name": "",
@@ -642,14 +642,14 @@
   "model": "catalogi.zaaktypeinformatieobjecttype",
   "pk": 2,
   "fields": {
-      "_etag": "_etag",
-      "uuid": "1aaa26ca-f121-4b6d-9407-ba549efed336",
-      "zaaktype": 1,
-      "informatieobjecttype": 2,
-      "volgnummer": 2,
-      "richting": "inkomend",
-      "statustype": null
-    }
+    "_etag": "_etag",
+    "uuid": "1aaa26ca-f121-4b6d-9407-ba549efed336",
+    "zaaktype": 1,
+    "informatieobjecttype": 2,
+    "volgnummer": 2,
+    "richting": "inkomend",
+    "statustype": null
+  }
 },
 {
   "model": "authorizations.applicatie",
@@ -682,6 +682,16 @@
   }
 },
 {
+  "model": "authorizations.applicatie",
+  "pk": 4,
+  "fields": {
+    "uuid": "be66488c-4578-4276-bada-533142dead4e",
+    "client_ids": "[\"kofax_client\"]",
+    "label": "Kofax",
+    "heeft_alle_autorisaties": true
+  }
+},
+{
   "model": "vng_api_common.jwtsecret",
   "pk": 1,
   "fields": {
@@ -703,6 +713,14 @@
   "fields": {
     "identifier": "openformulieren",
     "secret": "openformulieren"
+  }
+},
+{
+  "model": "vng_api_common.jwtsecret",
+  "pk": 4,
+  "fields": {
+    "identifier": "kofax_client",
+    "secret": "40d58f03-fae4-4924-bec3-4ad310909af5"
   }
 },
 {
