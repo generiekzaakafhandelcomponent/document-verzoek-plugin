@@ -2,6 +2,12 @@
 
 Overzicht van wijzigingen per versie van de Document Verzoek-plugin.
 
+## 0.9.5
+
+Valtimo bijgewerkt naar versie 13.43.0.
+Documentatie toegevoegd.
+Set upload process for case bezwaar.
+
 ## 0.9.4
 
 Valtimo bijgewerkt naar versie 13.41.0.
