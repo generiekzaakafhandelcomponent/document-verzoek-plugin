@@ -1,17 +1,17 @@
 {
     "name": "@valtimo-plugins/document-verzoek",
     "license": "EUPL-1.2",
-    "version": "0.9.4",
+    "version": "0.9.5",
     "scripts": {
         "build": "ng build @valtimo-plugins/document-verzoek",
         "watch": "ng build @valtimo-plugins/document-verzoek --watch"
     },
     "peerDependencies": {
-        "@angular/common": "19.2.20",
-        "@angular/core": "19.2.20"
+        "@angular/common": "19.2.25",
+        "@angular/core": "19.2.25"
     },
     "dependencies": {
-        "@angular/forms": "19.2.20",
+        "@angular/forms": "19.2.25",
         "tslib": "2.8.1"
     }
 }
