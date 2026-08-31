@@ -6,12 +6,6 @@
     "formDefinitionName": "start-form-example"
   },
   {
-    "activityId": "WaitTask",
-    "activityType": "bpmn:UserTask:create",
-    "formDefinitionName": "empty-form",
-    "processLinkType": "form"
-  },
-  {
     "activityId": "ConfirmReceivedDocument",
     "activityType": "bpmn:UserTask:create",
     "formDefinitionName": "external-document-event-received",
