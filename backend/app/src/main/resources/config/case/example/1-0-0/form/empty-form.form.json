@@ -1,0 +1,11 @@
+{
+    "display": "form",
+    "components": [
+        {
+            "key": "submit",
+            "type": "button",
+            "input": true,
+            "label": "Submit"
+        }
+    ]
+}
