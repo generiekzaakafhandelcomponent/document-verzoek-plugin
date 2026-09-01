@@ -15,9 +15,6 @@ GET {{openzaak_host}}/zaken/api/v1/zaken
 
 ### Create Enkelvoudiginformatieobjecten
 < {%
-    import {setOpenZaakHeaders} from "../openzaak-jwt.js"
-
-    setOpenZaakHeaders(request, client);
     client.global.set("creatiedatum", new Date().toISOString().split("T")[0]);
 %}
 POST {{openzaak_host}}documenten/api/v1/enkelvoudiginformatieobjecten
@@ -26,8 +23,7 @@ Content-Type: application/json
 < ./bodies/enkelvoudiginformatieobject.json
 
 > {%
-    const json = response.body;
-    client.global.set("informatieobject_url", json.url);
+    client.global.set("informatieobject_url", response.body.url);
 %}
 
 ### Maak zaakinformatie object aan en koppel enkelvoudiginformatieobject aan Zaak
@@ -35,7 +31,6 @@ Content-Type: application/json
     const vernietigingsdatum = new Date();
     vernietigingsdatum.setFullYear(vernietigingsdatum.getFullYear() + 1);
     client.global.set("vernietigingsdatum", vernietigingsdatum.toISOString());
-    client.log("informatieobject_url: " + client.global.get("informatieobject_url"));
     import {setOpenZaakHeaders} from "../openzaak-jwt.js"
     setOpenZaakHeaders(request, client);
 %}
