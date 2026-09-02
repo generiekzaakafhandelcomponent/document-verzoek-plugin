@@ -5,7 +5,7 @@
     setOpenZaakHeaders(request, client);
 %}
 
-GET {{openzaak_host}}/zaken/api/v1/zaken
+GET {{openzaak_host}}zaken/api/v1/zaken?zaaktype={{zaaktype_url}}
 
 > {%
     const json = response.body;

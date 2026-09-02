@@ -1,7 +1,7 @@
 {
     "name": "@valtimo-plugins/document-verzoek",
     "license": "EUPL-1.2",
-    "version": "0.9.5",
+    "version": "0.9.6",
     "scripts": {
         "build": "ng build @valtimo-plugins/document-verzoek",
         "watch": "ng build @valtimo-plugins/document-verzoek --watch"
