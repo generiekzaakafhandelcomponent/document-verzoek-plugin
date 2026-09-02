@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" exporter="Camunda Modeler" exporterVersion="5.23.0" expressionLanguage="http://www.w3.org/1999/XPath" id="definitions_external-document-notification" targetNamespace="http://www.omg.org/spec/BPMN/20100524/MODEL" typeLanguage="http://www.w3.org/2001/XMLSchema">
+      
+  
+  <collaboration id="ExternalDocumentNotificationProces" isClosed="false">
+            
+    
+    <participant id="externe-document-notificatie" name="Externe document notificatie" processRef="external-document-notification-proces"/>
+          
+  
+  </collaboration>
+      
+  
+  <process camunda:historyTimeToLive="P180D" camunda:versionTag="BB:external-document-notification:1.0.0" id="external-document-notification-proces" isClosed="false" isExecutable="true" name="Externe document notificatie" processType="None">
+            
+    
+    <startEvent id="start-event" isInterrupting="true" name="StartEvent" parallelMultiple="false">
+                  
+      
+      <outgoing>Flow_13hj7r6</outgoing>
+                
+    
+    </startEvent>
+            
+    
+    <sequenceFlow id="Flow_0qzgw0k" sourceRef="confirm-document-received-task" targetRef="end-event"/>
+            
+    
+    <sequenceFlow id="Flow_13hj7r6" sourceRef="start-event" targetRef="wait-for-document-task"/>
+            
+    
+    <sequenceFlow id="Flow_1cj1z2d" sourceRef="wait-for-document-task" targetRef="confirm-document-received-task"/>
+            
+    
+    <intermediateCatchEvent id="wait-for-document-task" name="Waiting for document added to case" parallelMultiple="false">
+                  
+      
+      <incoming>Flow_13hj7r6</incoming>
+                  
+      
+      <outgoing>Flow_1cj1z2d</outgoing>
+                  
+      
+      <messageEventDefinition id="MessageEventDefinition_0fgda1t" messageRef="Message_18jg0tj"/>
+                
+    
+    </intermediateCatchEvent>
+            
+    
+    <userTask completionQuantity="1" id="confirm-document-received-task" implementation="##unspecified" isForCompensation="false" name="Confirm received document" startQuantity="1">
+                  
+      
+      <incoming>Flow_1cj1z2d</incoming>
+                  
+      
+      <outgoing>Flow_0qzgw0k</outgoing>
+                
+    
+    </userTask>
+            
+    
+    <endEvent id="end-event">
+                  
+      
+      <incoming>Flow_0qzgw0k</incoming>
+                
+    
+    </endEvent>
+          
+  
+  </process>
+      
+  
+  <message id="Message_18jg0tj" name="DOCUMENT_RECEIVED"/>
+      
+  
+  <bpmndi:BPMNDiagram id="BPMNDiagram_external-document-notification">
+            
+    
+    <bpmndi:BPMNPlane bpmnElement="ExternalDocumentNotificationProces" id="BPMNPlane_external-document-notification">
+                  
+      
+      <bpmndi:BPMNShape bpmnElement="externe-document-notificatie" id="Participant_edn_di" isHorizontal="true">
+                        
+        
+        <dc:Bounds height="247" width="590" x="170" y="83"/>
+                        
+        
+        <bpmndi:BPMNLabel/>
+                      
+      
+      </bpmndi:BPMNShape>
+                  
+      
+      <bpmndi:BPMNShape bpmnElement="start-event" id="BPMNShape_start-event">
+                        
+        
+        <dc:Bounds height="36" width="36" x="240" y="190"/>
+                        
+        
+        <bpmndi:BPMNLabel>
+                              
+          
+          <dc:Bounds height="14" width="52" x="233" y="226"/>
+                            
+        
+        </bpmndi:BPMNLabel>
+                      
+      
+      </bpmndi:BPMNShape>
+                  
+      
+      <bpmndi:BPMNShape bpmnElement="wait-for-document-task" id="Event_1cr7fa7_di">
+                        
+        
+        <dc:Bounds height="36" width="36" x="342" y="190"/>
+                        
+        
+        <bpmndi:BPMNLabel>
+                              
+          
+          <dc:Bounds height="40" width="82" x="324" y="233"/>
+                            
+        
+        </bpmndi:BPMNLabel>
+                      
+      
+      </bpmndi:BPMNShape>
+                  
+      
+      <bpmndi:BPMNShape bpmnElement="confirm-document-received-task" id="Activity_090zis5_di">
+                        
+        
+        <dc:Bounds height="80" width="100" x="460" y="168"/>
+                      
+      
+      </bpmndi:BPMNShape>
+                  
+      
+      <bpmndi:BPMNShape bpmnElement="end-event" id="BPMNShape_end-event">
+                        
+        
+        <dc:Bounds height="36" width="36" x="642" y="190"/>
+                      
+      
+      </bpmndi:BPMNShape>
+                  
+      
+      <bpmndi:BPMNEdge bpmnElement="Flow_0qzgw0k" id="Flow_0qzgw0k_di">
+                        
+        
+        <di:waypoint x="560" y="208"/>
+                        
+        
+        <di:waypoint x="642" y="208"/>
+                      
+      
+      </bpmndi:BPMNEdge>
+                  
+      
+      <bpmndi:BPMNEdge bpmnElement="Flow_13hj7r6" id="Flow_13hj7r6_di">
+                        
+        
+        <di:waypoint x="276" y="208"/>
+                        
+        
+        <di:waypoint x="342" y="208"/>
+                      
+      
+      </bpmndi:BPMNEdge>
+                  
+      
+      <bpmndi:BPMNEdge bpmnElement="Flow_1cj1z2d" id="Flow_1cj1z2d_di">
+                        
+        
+        <di:waypoint x="378" y="208"/>
+                        
+        
+        <di:waypoint x="460" y="208"/>
+                      
+      
+      </bpmndi:BPMNEdge>
+                
+    
+    </bpmndi:BPMNPlane>
+          
+  
+  </bpmndi:BPMNDiagram>
+    
+
+</definitions>

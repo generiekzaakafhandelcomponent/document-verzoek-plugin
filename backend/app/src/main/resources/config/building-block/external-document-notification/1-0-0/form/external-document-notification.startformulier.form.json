@@ -1,0 +1,21 @@
+{
+  "components" : [
+    {
+      "key" : "html",
+      "type" : "htmlelement",
+      "input" : false,
+      "label" : "HTML",
+      "content" : "Een document is extern toegevoegd aan deze zaak.",
+      "tableView" : false,
+      "refreshOnChange" : false
+    },
+    {
+      "key" : "submit",
+      "type" : "button",
+      "input" : true,
+      "label" : "Verstuur notificatie",
+      "tableView" : false,
+      "disableOnInvalid" : true
+    }
+  ]
+}
