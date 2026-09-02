@@ -1,0 +1,15 @@
+### Get zaaktypen and list their urls
+< {%
+    import {setOpenZaakHeaders} from "../openzaak-jwt.js"
+
+    setOpenZaakHeaders(request, client);
+%}
+
+GET {{openzaak_host}}catalogi/api/v1/zaaktypen
+
+> {%
+    const json = response.body;
+    json.results.forEach((zaaktype) => {
+        client.log(`${zaaktype.identificatie} - ${zaaktype.omschrijving}: ${zaaktype.url}`);
+    });
+%}
