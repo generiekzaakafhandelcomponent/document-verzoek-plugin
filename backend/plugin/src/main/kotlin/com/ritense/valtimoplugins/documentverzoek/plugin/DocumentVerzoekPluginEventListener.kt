@@ -167,6 +167,7 @@ class DocumentVerzoekPluginEventListener(
             sendMessage(
                 documentId.toString(),
                 plugin.eventMessage,
+                plugin.startMessage,
                 zaakInformatieObject,
                 informatieObject,
             )
@@ -199,15 +200,38 @@ class DocumentVerzoekPluginEventListener(
     private fun sendMessage(
         documentId: String,
         eventMessage: String,
+        startMessage: String?,
         zaakInformatieObject: ZaakInformatieObject,
         informatieObject: DocumentInformatieObject?,
     ) {
+        val variables =
+            mapOf(
+                "zaakInformatieObject" to objectMapper.convertValue<Any>(zaakInformatieObject),
+                "informatieObject" to objectMapper.convertValue<Any?>(informatieObject),
+            )
+
+        // When configured, start every building block linked to the case whose main process
+        // declares a message start event named [startMessage]. This must run BEFORE the catch
+        // correlation below: starting the building block runs it up to its internal
+        // 'DOCUMENT_RECEIVED' catch, so that the subsequent case-wide correlation (which also
+        // targets building-block business keys) can deliver [eventMessage] to it.
+        if (!startMessage.isNullOrBlank()) {
+            val started =
+                correlationService.sendStartMessageToCase(
+                    startMessage,
+                    documentId,
+                    variables,
+                )
+            logger.debug {
+                "DocumentVerzoekPlugin: start message '$startMessage' started ${started.size} building block(s) for case '$documentId'"
+            }
+        }
+
         val results =
             correlationService.sendCatchEventMessageToCase(
                 eventMessage,
                 documentId,
-                "zaakInformatieObject", objectMapper.convertValue(zaakInformatieObject),
-                "informatieObject", objectMapper.convertValue(informatieObject),
+                variables,
             )
         logger.debug {
             "DocumentVerzoekPlugin: message '$eventMessage' sent to case '$documentId' with ${results.size} result(s)"

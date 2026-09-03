@@ -10,5 +10,15 @@
     "activityType": "bpmn:UserTask:create",
     "formDefinitionName": "external-document-event-received",
     "processLinkType": "form"
+  },
+  {
+    "activityId": "test-met-bouwblok-task",
+    "activityType": "bpmn:CallActivity:start",
+    "buildingBlockDefinitionKey": "external-document-notification",
+    "buildingBlockDefinitionVersionTag": "1.0.0",
+    "pluginConfigurationMappings": {},
+    "inputMappings": [],
+    "outputMappings": [],
+    "processLinkType": "building-block"
   }
 ]

@@ -52,6 +52,9 @@ class DocumentVerzoekPlugin(
     @PluginProperty(key = "eventMessage", secret = false)
     lateinit var eventMessage: String
 
+    @PluginProperty(key = "startMessage", secret = false, required = false)
+    var startMessage: String? = null
+
     @PluginProperty(key = "applicatieId", secret = false)
     lateinit var applicatieId: String
 
