@@ -1,30 +1,54 @@
 {
-    "display": "form",
-    "components": [
-        {
-            "key": "html",
-            "type": "htmlelement",
-            "input": false,
-            "label": "Instructions",
-            "content": "Start a new example case. The sample plugin will call a Time API during execution.",
-            "tableView": false,
-            "refreshOnChange": false
-        },
-        {
-            "key": "name",
-            "type": "textfield",
-            "input": true,
-            "label": "Name",
-            "tableView": true,
-            "applyMaskOn": "change"
-        },
-        {
-            "key": "submit",
-            "type": "button",
-            "input": true,
-            "label": "Start",
-            "tableView": false,
-            "disableOnInvalid": true
-        }
-    ]
+  "components" : [
+    {
+      "key": "pv:test-flow",
+      "type": "select",
+      "input": true,
+      "label": "Flow voor het ontvangen van een notificatie dat een extern toegevoegd document is toegevoegd aan een case",
+      "dataSrc": "values",
+      "data": {
+        "values": [
+          {
+            "label": "direct met proces",
+            "value": "DIRECT_MET_PROCES"
+          },
+          {
+            "label": "met bouwblok",
+            "value": "MET_BOUWBLOK"
+          },
+          {
+            "label": "alleen start event",
+            "value": "ALLEEN_START_EVENT"
+          }
+        ]
+      },
+      "widget": "choicesjs",
+      "tableView": true,
+      "validate": {
+        "required": true
+      },
+      "attributes": {
+        "data-testid": "openvtb-bericht-genereren-flow-select"
+      },
+      "persistent": true,
+      "validateOn": "change",
+      "clearOnHide": true,
+      "conditional": {
+        "show": null,
+        "when": null,
+        "eq": ""
+      },
+      "defaultValue": "ALLEEN_START_EVENT",
+      "labelPosition": "top"
+    },
+    {
+      "key": "submit",
+      "type": "button",
+      "input": true,
+      "label": "Start test flow",
+      "action": "submit",
+      "tableView": false,
+      "disableOnInvalid": true
+    }
+  ]
 }

@@ -19,11 +19,10 @@ package com.ritense.valtimoplugins.documentverzoek.plugin
 import com.fasterxml.jackson.module.kotlin.convertValue
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.ritense.authorization.annotation.RunWithoutAuthorization
-import com.ritense.document.service.DocumentService
 import com.ritense.documentenapi.client.DocumentInformatieObject
 import com.ritense.notificatiesapi.event.NotificatiesApiNotificationReceivedEvent
 import com.ritense.plugin.service.PluginService
-import com.ritense.processdocument.service.impl.OperatonProcessJsonSchemaDocumentAssociationService
+import com.ritense.processdocument.service.CorrelationService
 import com.ritense.valtimo.contract.annotation.SkipComponentScan
 import com.ritense.valtimo.contract.audit.utils.AuditHelper
 import com.ritense.valtimo.contract.utils.RequestHelper
@@ -32,7 +31,6 @@ import com.ritense.zakenapi.domain.ZaakInformatieObject
 import com.ritense.zakenapi.link.ZaakInstanceLinkNotFoundException
 import com.ritense.zakenapi.link.ZaakInstanceLinkService
 import io.github.oshai.kotlinlogging.KotlinLogging
-import org.operaton.bpm.engine.RuntimeService
 import org.springframework.context.ApplicationEventPublisher
 import org.springframework.context.event.EventListener
 import org.springframework.core.env.Environment
@@ -47,9 +45,7 @@ import java.util.UUID
 @Transactional
 class DocumentVerzoekPluginEventListener(
     private val zaakInstanceLinkService: ZaakInstanceLinkService,
-    private val runtimeService: RuntimeService,
-    private val processDocumentService: OperatonProcessJsonSchemaDocumentAssociationService,
-    private val documentService: DocumentService,
+    private val correlationService: CorrelationService,
     private val pluginService: PluginService,
     private val environment: Environment,
     private val applicationEventPublisher: ApplicationEventPublisher,
@@ -206,21 +202,20 @@ class DocumentVerzoekPluginEventListener(
         zaakInformatieObject: ZaakInformatieObject,
         informatieObject: DocumentInformatieObject?,
     ) {
-        documentService.get(documentId).let { doc ->
-            processDocumentService.findProcessDocumentInstances(doc.id()).forEach { procInst ->
-                procInst.id?.let { procInst ->
-                    val response =
-                        runtimeService
-                            .createMessageCorrelation(eventMessage)
-                            .processInstanceId(procInst.processInstanceId().toString())
-                            .setVariable("zaakInformatieObject", objectMapper.convertValue(zaakInformatieObject))
-                            .setVariable("informatieObject", objectMapper.convertValue(informatieObject))
-                            .correlateAll()
-                    logger.debug {
-                        "DocumentVerzoekPlugin: message '$eventMessage' sent to process instance '${procInst.processInstanceId()}' with response '$response'"
-                    }
-                }
-            }
+        val variables =
+            mapOf(
+                "zaakInformatieObject" to objectMapper.convertValue<Any>(zaakInformatieObject),
+                "informatieObject" to objectMapper.convertValue<Any?>(informatieObject),
+            )
+
+        val results =
+            correlationService.sendCatchEventMessageToCase(
+                eventMessage,
+                documentId,
+                variables,
+            )
+        logger.debug {
+            "DocumentVerzoekPlugin: message '$eventMessage' sent to case '$documentId' with ${results.size} result(s)"
         }
     }
 

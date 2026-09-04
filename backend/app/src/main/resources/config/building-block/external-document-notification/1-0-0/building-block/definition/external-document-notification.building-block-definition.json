@@ -1,0 +1,10 @@
+{
+  "key" : "external-document-notification",
+  "versionTag" : "1.0.0",
+  "name" : "External document notification",
+  "description" : "Building block to notify that a document is added externally by a third party.",
+  "createdBy" : null,
+  "createdDate" : null,
+  "basedOnVersionTag" : null,
+  "final" : false
+}

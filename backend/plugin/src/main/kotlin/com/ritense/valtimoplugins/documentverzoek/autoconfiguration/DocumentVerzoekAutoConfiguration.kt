@@ -17,15 +17,13 @@
 package com.ritense.valtimoplugins.documentverzoek.autoconfiguration
 
 import com.ritense.case.service.CaseDefinitionService
-import com.ritense.document.service.DocumentService
 import com.ritense.plugin.service.PluginService
-import com.ritense.processdocument.service.impl.OperatonProcessJsonSchemaDocumentAssociationService
+import com.ritense.processdocument.service.CorrelationService
 import com.ritense.valtimo.service.ApplicationStateService
 import com.ritense.valtimoplugins.documentverzoek.plugin.DocumentVerzoekPluginEventListener
 import com.ritense.valtimoplugins.documentverzoek.plugin.DocumentVerzoekPluginFactory
 import com.ritense.zakenapi.link.ZaakInstanceLinkService
 import com.ritense.zakenapi.repository.ZaakTypeLinkRepository
-import org.operaton.bpm.engine.RuntimeService
 import org.springframework.boot.autoconfigure.AutoConfiguration
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
 import org.springframework.context.ApplicationEventPublisher
@@ -53,18 +51,14 @@ class DocumentVerzoekAutoConfiguration {
     @ConditionalOnMissingBean(DocumentVerzoekPluginEventListener::class)
     fun documentVerzoekPluginEventListener(
         zaakInstanceLinkService: ZaakInstanceLinkService,
-        runtimeService: RuntimeService,
-        operatonProcessJsonSchemaDocumentAssociationService: OperatonProcessJsonSchemaDocumentAssociationService,
-        documentService: DocumentService,
+        correlationService: CorrelationService,
         pluginService: PluginService,
         environment: Environment,
         applicationEventPublisher: ApplicationEventPublisher,
     ): DocumentVerzoekPluginEventListener =
         DocumentVerzoekPluginEventListener(
             zaakInstanceLinkService,
-            runtimeService,
-            operatonProcessJsonSchemaDocumentAssociationService,
-            documentService,
+            correlationService,
             pluginService,
             environment,
             applicationEventPublisher,

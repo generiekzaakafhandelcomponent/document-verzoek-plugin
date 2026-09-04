@@ -6,9 +6,28 @@
     "formDefinitionName": "start-form-example"
   },
   {
-    "activityId": "ConfirmReceivedDocument",
+    "activityId": "confirm-received-document",
     "activityType": "bpmn:UserTask:create",
-    "formDefinitionName": "external-document-event-received",
+    "formDefinitionName": "external-document-event-received-process",
     "processLinkType": "form"
+  },
+  {
+    "activityId" : "close-case",
+    "activityType" : "bpmn:UserTask:create",
+    "formDefinitionName" : "close-case",
+    "viewModelEnabled" : false,
+    "formDisplayType" : "modal",
+    "formSize" : "medium",
+    "processLinkType" : "form"
+  },
+  {
+    "activityId": "test-met-bouwblok-task",
+    "activityType": "bpmn:CallActivity:start",
+    "buildingBlockDefinitionKey": "external-document-notification",
+    "buildingBlockDefinitionVersionTag": "1.0.0",
+    "pluginConfigurationMappings": {},
+    "inputMappings": [],
+    "outputMappings": [],
+    "processLinkType": "building-block"
   }
 ]

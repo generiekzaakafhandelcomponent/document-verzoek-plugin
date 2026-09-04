@@ -1,67 +1,189 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0">
   <bpmn:collaboration id="Collaboration_1">
     <bpmn:participant id="example-participant" name="Example Process" processRef="example-process" />
+    <bpmn:textAnnotation id="TextAnnotation_0h4ab49">
+      <bpmn:text>Only test with event start event</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_00t4nb2" associationDirection="None" sourceRef="Flow_1ksxrco" targetRef="TextAnnotation_0h4ab49" />
   </bpmn:collaboration>
   <bpmn:process id="example-process" name="Example Process" isExecutable="true">
     <bpmn:startEvent id="start-event" name="Process started">
       <bpmn:outgoing>Flow_1</bpmn:outgoing>
     </bpmn:startEvent>
-    <bpmn:sequenceFlow id="Flow_1" sourceRef="start-event" targetRef="WaitForDocument" />
-    <bpmn:sequenceFlow id="Flow_0nqmpq1" sourceRef="WaitForDocument" targetRef="ConfirmReceivedDocument" />
-    <bpmn:sequenceFlow id="Flow_1qd1ud5" sourceRef="ConfirmReceivedDocument" targetRef="end-event" />
-    <bpmn:intermediateCatchEvent id="WaitForDocument" name="Waiting for document added to case">
-      <bpmn:incoming>Flow_1</bpmn:incoming>
-      <bpmn:outgoing>Flow_0nqmpq1</bpmn:outgoing>
-      <bpmn:messageEventDefinition id="MessageEventDefinition_0fgda1t" messageRef="Message_18jg0tj" />
-    </bpmn:intermediateCatchEvent>
-    <bpmn:userTask id="ConfirmReceivedDocument" name="Confirm received document">
+    <bpmn:userTask id="confirm-received-document" name="Confirm received document">
       <bpmn:incoming>Flow_0nqmpq1</bpmn:incoming>
       <bpmn:outgoing>Flow_1qd1ud5</bpmn:outgoing>
     </bpmn:userTask>
+    <bpmn:intermediateCatchEvent id="WaitForDocument" name="Waiting for document added to case">
+      <bpmn:incoming>Flow_0w23zrd</bpmn:incoming>
+      <bpmn:outgoing>Flow_0nqmpq1</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0fgda1t" messageRef="Message_18jg0tj" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:exclusiveGateway id="Gateway_01o5cq4" default="Flow_0w23zrd">
+      <bpmn:incoming>Flow_1</bpmn:incoming>
+      <bpmn:outgoing>Flow_0w23zrd</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0qc59cu</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ksxrco</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:callActivity id="test-met-bouwblok-task" name="Test with building block" calledElement="external-document-notification-proces" camunda:calledElementBinding="versionTag" camunda:calledElementVersionTag="BB:external-document-notification:1.0.0">
+      <bpmn:extensionElements>
+        <camunda:in businessKey="#{buildingBlockDocumentId}" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0qc59cu</bpmn:incoming>
+      <bpmn:outgoing>Flow_01ze8tm</bpmn:outgoing>
+    </bpmn:callActivity>
     <bpmn:endEvent id="end-event" name="Process ended">
       <bpmn:extensionElements />
-      <bpmn:incoming>Flow_1qd1ud5</bpmn:incoming>
+      <bpmn:incoming>Flow_1feltyr</bpmn:incoming>
+      <bpmn:terminateEventDefinition id="TerminateEventDefinition_1" />
     </bpmn:endEvent>
+    <bpmn:exclusiveGateway id="Gateway_0771du8">
+      <bpmn:incoming>Flow_1qd1ud5</bpmn:incoming>
+      <bpmn:incoming>Flow_01ze8tm</bpmn:incoming>
+      <bpmn:incoming>Flow_10qb5pw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1feltyr</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:subProcess id="Activity_0g2bho4" name="Wait on document received notifications" triggeredByEvent="true">
+      <bpmn:callActivity id="call-activity-notification-received" name="Notification received" calledElement="document-received-sub-process">
+        <bpmn:extensionElements>
+          <camunda:in businessKey="#{execution.processBusinessKey}" />
+        </bpmn:extensionElements>
+        <bpmn:incoming>Flow_1gmpu4y</bpmn:incoming>
+      </bpmn:callActivity>
+      <bpmn:sequenceFlow id="Flow_1gmpu4y" sourceRef="Event_1gczv80" targetRef="call-activity-notification-received" />
+      <bpmn:startEvent id="Event_1gczv80" name="Wait" isInterrupting="false">
+        <bpmn:outgoing>Flow_1gmpu4y</bpmn:outgoing>
+        <bpmn:messageEventDefinition id="MessageEventDefinition_0lvrkde" messageRef="Message_18jg0tj" />
+      </bpmn:startEvent>
+    </bpmn:subProcess>
+    <bpmn:sequenceFlow id="Flow_1" sourceRef="start-event" targetRef="Gateway_01o5cq4" />
+    <bpmn:sequenceFlow id="Flow_0nqmpq1" sourceRef="WaitForDocument" targetRef="confirm-received-document" />
+    <bpmn:sequenceFlow id="Flow_1qd1ud5" sourceRef="confirm-received-document" targetRef="Gateway_0771du8" />
+    <bpmn:sequenceFlow id="Flow_0w23zrd" sourceRef="Gateway_01o5cq4" targetRef="WaitForDocument" />
+    <bpmn:sequenceFlow id="Flow_0qc59cu" sourceRef="Gateway_01o5cq4" targetRef="test-met-bouwblok-task">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${execution.hasVariable("test-flow") &amp;&amp; execution.getVariable("test-flow") == "MET_BOUWBLOK" }</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1ksxrco" sourceRef="Gateway_01o5cq4" targetRef="close-case">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">${execution.hasVariable("test-flow") &amp;&amp; execution.getVariable("test-flow") == "ALLEEN_START_EVENT" }</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_01ze8tm" sourceRef="test-met-bouwblok-task" targetRef="Gateway_0771du8" />
+    <bpmn:sequenceFlow id="Flow_1feltyr" sourceRef="Gateway_0771du8" targetRef="end-event" />
+    <bpmn:userTask id="close-case" name="Close Case">
+      <bpmn:incoming>Flow_1ksxrco</bpmn:incoming>
+      <bpmn:outgoing>Flow_10qb5pw</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_10qb5pw" sourceRef="close-case" targetRef="Gateway_0771du8" />
   </bpmn:process>
   <bpmn:message id="Message_18jg0tj" name="DOCUMENT_RECEIVED" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_1">
       <bpmndi:BPMNShape id="Participant_1_di" bpmnElement="example-participant" isHorizontal="true">
-        <dc:Bounds x="160" y="100" width="530" height="200" />
+        <dc:Bounds x="160" y="80" width="940" height="650" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="StartEvent_1_di" bpmnElement="start-event">
-        <dc:Bounds x="232" y="182" width="36" height="36" />
+        <dc:Bounds x="452" y="252" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="214" y="225" width="73" height="14" />
+          <dc:Bounds x="432" y="295" width="77" height="14" />
         </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_090zis5_di" bpmnElement="confirm-received-document">
+        <dc:Bounds x="740" y="230" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_1cr7fa7_di" bpmnElement="WaitForDocument">
-        <dc:Bounds x="332" y="182" width="36" height="36" />
+        <dc:Bounds x="642" y="252" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="314" y="225" width="82" height="40" />
+          <dc:Bounds x="624" y="295" width="82" height="40" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_090zis5_di" bpmnElement="ConfirmReceivedDocument">
-        <dc:Bounds x="440" y="160" width="100" height="80" />
+      <bpmndi:BPMNShape id="Gateway_01o5cq4_di" bpmnElement="Gateway_01o5cq4" isMarkerVisible="true">
+        <dc:Bounds x="545" y="245" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1uf48le_di" bpmnElement="test-met-bouwblok-task">
+        <dc:Bounds x="740" y="390" width="100" height="80" />
+        <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="EndEvent_1_di" bpmnElement="end-event">
-        <dc:Bounds x="602" y="182" width="36" height="36" />
+        <dc:Bounds x="1012" y="252" width="36" height="36" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="584" y="225" width="74" height="14" />
+          <dc:Bounds x="994" y="295" width="74" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_0771du8_di" bpmnElement="Gateway_0771du8" isMarkerVisible="true">
+        <dc:Bounds x="885" y="245" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1iiqhi2_di" bpmnElement="Activity_0g2bho4" isExpanded="true">
+        <dc:Bounds x="260" y="510" width="250" height="170" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="BPMNShape_0s23k7j" bpmnElement="call-activity-notification-received">
+        <dc:Bounds x="370" y="550" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_091ugcp_di" bpmnElement="Event_1gczv80">
+        <dc:Bounds x="300" y="572" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="308" y="615" width="22" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1gmpu4y_di" bpmnElement="Flow_1gmpu4y">
+        <di:waypoint x="336" y="590" />
+        <di:waypoint x="370" y="590" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="BPMNShape_163f26r" bpmnElement="close-case">
+        <dc:Bounds x="730" y="110" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge id="Flow_1_di" bpmnElement="Flow_1">
-        <di:waypoint x="268" y="200" />
-        <di:waypoint x="332" y="200" />
+        <di:waypoint x="488" y="270" />
+        <di:waypoint x="545" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0nqmpq1_di" bpmnElement="Flow_0nqmpq1">
-        <di:waypoint x="368" y="200" />
-        <di:waypoint x="440" y="200" />
+        <di:waypoint x="678" y="270" />
+        <di:waypoint x="740" y="270" />
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1qd1ud5_di" bpmnElement="Flow_1qd1ud5">
-        <di:waypoint x="540" y="200" />
-        <di:waypoint x="602" y="200" />
+        <di:waypoint x="840" y="270" />
+        <di:waypoint x="885" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w23zrd_di" bpmnElement="Flow_0w23zrd">
+        <di:waypoint x="595" y="270" />
+        <di:waypoint x="642" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0qc59cu_di" bpmnElement="Flow_0qc59cu">
+        <di:waypoint x="570" y="295" />
+        <di:waypoint x="570" y="430" />
+        <di:waypoint x="740" y="430" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ksxrco_di" bpmnElement="Flow_1ksxrco">
+        <di:waypoint x="570" y="245" />
+        <di:waypoint x="570" y="150" />
+        <di:waypoint x="730" y="150" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="692" y="66" width="76" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_01ze8tm_di" bpmnElement="Flow_01ze8tm">
+        <di:waypoint x="840" y="430" />
+        <di:waypoint x="910" y="430" />
+        <di:waypoint x="910" y="295" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1feltyr_di" bpmnElement="Flow_1feltyr">
+        <di:waypoint x="935" y="270" />
+        <di:waypoint x="1012" y="270" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_10qb5pw_di" bpmnElement="Flow_10qb5pw">
+        <di:waypoint x="830" y="150" />
+        <di:waypoint x="910" y="150" />
+        <di:waypoint x="910" y="245" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="TextAnnotation_0h4ab49_di" bpmnElement="TextAnnotation_0h4ab49">
+        <dc:Bounds x="560" y="110" width="310" height="30" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_00t4nb2_di" bpmnElement="Association_00t4nb2">
+        <di:waypoint x="700" y="150" />
+        <di:waypoint x="708" y="140" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
