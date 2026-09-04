@@ -2,17 +2,7 @@
   {
     "activityId" : "confirm-document-received-task",
     "activityType" : "bpmn:UserTask:create",
-    "formDefinitionName" : "external-document-event-received",
-    "viewModelEnabled" : false,
-    "formDisplayType" : "modal",
-    "formSize" : "medium",
-    "subtitles" : [],
-    "processLinkType" : "form"
-  },
-  {
-    "activityId" : "start-event",
-    "activityType" : "bpmn:StartEvent:start",
-    "formDefinitionName" : "start-form-document-verzoek",
+    "formDefinitionName" : "external-document-event-received-building-block",
     "viewModelEnabled" : false,
     "formDisplayType" : "modal",
     "formSize" : "medium",

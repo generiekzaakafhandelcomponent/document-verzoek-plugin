@@ -15,6 +15,10 @@
           {
             "label": "met bouwblok",
             "value": "MET_BOUWBLOK"
+          },
+          {
+            "label": "alleen start event",
+            "value": "ALLEEN_START_EVENT"
           }
         ]
       },
@@ -34,7 +38,7 @@
         "when": null,
         "eq": ""
       },
-      "defaultValue": "MET_BOUWBLOK",
+      "defaultValue": "ALLEEN_START_EVENT",
       "labelPosition": "top"
     },
     {

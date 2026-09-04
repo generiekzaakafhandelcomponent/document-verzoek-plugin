@@ -27,7 +27,7 @@
   <bpmndi:BPMNDiagram id="BPMNDiagram_external-document-notification">
     <bpmndi:BPMNPlane id="BPMNPlane_external-document-notification" bpmnElement="ExternalDocumentNotificationProces">
       <bpmndi:BPMNShape id="Participant_edn_di" bpmnElement="externe-document-notificatie" isHorizontal="true">
-        <dc:Bounds x="170" y="83" width="590" height="247" />
+        <dc:Bounds x="170" y="83" width="590" height="337" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="BPMNShape_start-event" bpmnElement="start-event">

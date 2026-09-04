@@ -1,7 +1,12 @@
 [
-    {
-        "processDefinitionKey": "example-process",
-        "canInitializeDocument": true,
-        "startableByUser": true
-    }
+  {
+    "processDefinitionKey": "example-process",
+    "canInitializeDocument": true,
+    "startableByUser": true
+  },
+  {
+    "processDefinitionKey": "document-received-sub-process",
+    "canInitializeDocument": false,
+    "startableByUser": false
+  }
 ]
