@@ -2,6 +2,19 @@
 
 Overzicht van wijzigingen per versie van de Document Verzoek-plugin.
 
+## 0.9.8
+
+Added frontend documentation.
+
+## 0.9.7
+
+Valtimo bijgewerkt naar versie 13.44.0.
+Events worden nu naar alle processen verzonden. Inclusief de processen in de bouwblokken gestart door de zaak.
+3 voorbeelden van afhandelen:
+- Rechtstreeks in het hoofdproces
+- In een door de case gestart bouwblok
+- Vanuit een message start event
+
 ## 0.9.5
 
 Valtimo bijgewerkt naar versie 13.43.0.
