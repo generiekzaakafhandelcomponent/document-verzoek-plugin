@@ -1,0 +1,12 @@
+[
+  {
+    "activityId" : "notify-user-task",
+    "activityType" : "bpmn:UserTask:create",
+    "formDefinitionName" : "external-document-event-received-sub-process",
+    "viewModelEnabled" : false,
+    "formDisplayType" : "panel",
+    "formSize" : "medium",
+    "subtitles" : [],
+    "processLinkType" : "form"
+  }
+]

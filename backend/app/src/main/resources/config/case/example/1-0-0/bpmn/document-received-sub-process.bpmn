@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1aecez2" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="5.23.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.21.0">
+  <bpmn:collaboration id="Collaboration_0wnuqnx">
+    <bpmn:participant id="document-received-sub-process-id" name="Document received sub process" processRef="document-received-sub-process" />
+  </bpmn:collaboration>
+  <bpmn:process id="document-received-sub-process" name="Document received" isExecutable="true">
+    <bpmn:startEvent id="start-event" name="start sub process">
+      <bpmn:outgoing>Flow_1g7x6qw</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1g7x6qw" sourceRef="start-event" targetRef="notify-user-task" />
+    <bpmn:endEvent id="Event_1uggjmy">
+      <bpmn:incoming>Flow_1h3ftp1</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="Flow_1h3ftp1" sourceRef="notify-user-task" targetRef="Event_1uggjmy" />
+    <bpmn:userTask id="notify-user-task" name="Notify user">
+      <bpmn:incoming>Flow_1g7x6qw</bpmn:incoming>
+      <bpmn:outgoing>Flow_1h3ftp1</bpmn:outgoing>
+    </bpmn:userTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Collaboration_0wnuqnx">
+      <bpmndi:BPMNShape id="Participant_1y6kkje_di" bpmnElement="document-received-sub-process-id" isHorizontal="true">
+        <dc:Bounds x="158" y="80" width="462" height="130" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="start-event">
+        <dc:Bounds x="250" y="122" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="229" y="165" width="84" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1uggjmy_di" bpmnElement="Event_1uggjmy">
+        <dc:Bounds x="532" y="122" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_00jo931_di" bpmnElement="notify-user-task">
+        <dc:Bounds x="360" y="100" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1g7x6qw_di" bpmnElement="Flow_1g7x6qw">
+        <di:waypoint x="286" y="140" />
+        <di:waypoint x="360" y="140" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1h3ftp1_di" bpmnElement="Flow_1h3ftp1">
+        <di:waypoint x="460" y="140" />
+        <di:waypoint x="532" y="140" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
