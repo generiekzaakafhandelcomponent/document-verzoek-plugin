@@ -8,7 +8,6 @@
             "zakenApiPlugin": "3079d6fe-42e3-4f8f-a9db-52ce2507b7ee",
             "documentenApiPlugin": "5474fe57-532a-4050-8d89-32e62ca3e895",
             "eventMessage": "DOCUMENT_RECEIVED",
-            "startMessage": "START_DOCUMENT_BB",
             "applicatieId": "377e8200-f9e0-4282-8167-e686baa8f08d"
         }
     }
