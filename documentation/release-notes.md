@@ -2,6 +2,10 @@
 
 Overzicht van wijzigingen per versie van de Document Verzoek-plugin.
 
+## 0.9.9
+
+Ondersteuning voor Valtimo 13.48.0.
+
 ## 0.9.8
 
 Added frontend documentation.
